@@ -1,14 +1,21 @@
 import React from 'react';
 import { ContactItem } from './ContactsItem/ContactsItem';
-import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
+import { getContactsFilter, getContactsArray } from 'redux/selectors';
+import { nanoid } from '@reduxjs/toolkit';
 
 import css from './Contacts.module.css';
 
-export const Contacts = ({ contacts, deleteContact }) => {
+export const Contacts = () => {
+  const contacts = useSelector(getContactsArray);
+  const filter = useSelector(getContactsFilter).toLowerCase();
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter)
+  );
+
   return (
     <ul className={css.list}>
-      {contacts.map(({ id, name, number }) => {
+      {filteredContacts.map(({ id, name, number }) => {
         return (
           <li className={css.listItem} key={nanoid()}>
             <ContactItem
@@ -22,15 +29,4 @@ export const Contacts = ({ contacts, deleteContact }) => {
       })}
     </ul>
   );
-};
-
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      number: PropTypes.string,
-    })
-  ),
-  deleteContact: PropTypes.func,
 };
