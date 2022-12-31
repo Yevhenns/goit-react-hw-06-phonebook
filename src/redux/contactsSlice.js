@@ -23,4 +23,22 @@ const contactsSlice = createSlice({
       },
     },
   },
+  deleteContact(state, action) {
+    const index = state.contacts.findIndex(
+      contact => contact.id === action.payload
+    );
+    state.contacts.splice(index, 1);
+  },
 });
+
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
+
+export const { addContact, deleteContact } = contactsSlice.actions;
+export const contactsReducer = contactsSlice.reducer;
+export const persistClickReducer = persistReducer(
+  persistConfig,
+  contactsReducer
+);
