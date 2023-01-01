@@ -9,10 +9,10 @@ export const App = () => {
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <Form onSubmit={formSubmitHandler} />
+      <Form />
       <h2>Contacts</h2>
-      <Filter onChange={filterHandler} value={filterData} />
-      <Contacts contacts={filteredContacts} deleteContact={deleteContact} />
+      <Filter />
+      <Contacts />
     </div>
   );
 };

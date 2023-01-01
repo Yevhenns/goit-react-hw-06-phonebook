@@ -22,7 +22,7 @@ export const Contacts = () => {
               id={id}
               name={name}
               number={number}
-              deleteContact={deleteContact}
+              // deleteContact={deleteContact}
             />
           </li>
         );

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { filtersReducer } from './filterSlice';
+import { filterReducer } from './filterSlice';
 import { persistClickReducer } from './contactsSlice';
 import {
   persistStore,
@@ -14,7 +14,7 @@ import {
 export const store = configureStore({
   reducer: {
     contacts: persistClickReducer,
-    filter: filtersReducer,
+    filter: filterReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
