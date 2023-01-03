@@ -8,6 +8,7 @@ export const contactsSlice = createSlice({
     contacts: [],
     filter: '',
   },
+
   reducers: {
     addContact(state, action) {
       state.contacts.push(action.payload);
