@@ -1,7 +1,6 @@
 import { getContactsArray } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 
 import css from './Form.module.css';
 
@@ -9,27 +8,28 @@ export const Form = () => {
   const contacts = useSelector(getContactsArray);
   const dispatch = useDispatch;
 
+  const handleNameChange = e => {
+    return e.currentTarget.value;
+  };
+
+  const handleNumberChange = e => {
+    return e.currentTarget.value;
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    const form = e.target;
-    const name = form.elements.name.value;
-    const number = form.elements.name.value;
+    const name = e.target.elements.name.value;
+    const number = e.target.elements.number.value;
+    const item = { name, number };
+    e.target.reset();
 
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+    const isDublicate = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
 
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      return alert(`${name} is already in contacts.`);
-    }
-    dispatch(addContact(contact));
-    form.reset();
+    isDublicate
+      ? alert(`${name} is already in contacts`)
+      : dispatch(addContact(item));
   };
 
   return (
@@ -37,24 +37,24 @@ export const Form = () => {
       <label htmlFor="nameItem">Name</label>
       <input
         id="nameItem"
-        // value={name}
-        // onChange={handleNameChange}
+        onChange={handleNameChange}
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
+        placeholder="Boris Johnsoniuk"
       />
       <label htmlFor="numberItem">Number</label>
       <input
         id="numberItem"
-        // value={number}
-        // onChange={handleNumberChange}
+        onChange={handleNumberChange}
         type="tel"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
+        placeholder="067 111 22 33"
       />
       <button type="submit">Add contact</button>
     </form>
