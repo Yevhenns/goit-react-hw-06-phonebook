@@ -10,13 +10,20 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const changeFilter = e => {
-    dispatch(setFilter(e.target.value.toLowerCase()));
+    let searchName = e.target.value;
+    dispatch(setFilter(searchName.toLowerCase()));
   };
 
   return (
     <div className={css.filterContainer}>
       <label htmlFor="find">Find contacts by name</label>
-      <input id="find" type="text" value={filterName} onChange={changeFilter} />
+      <input
+        id="find"
+        type="text"
+        value={filterName}
+        onChange={changeFilter}
+        placeholder="Boris Johnsoniuk"
+      />
     </div>
   );
 };
