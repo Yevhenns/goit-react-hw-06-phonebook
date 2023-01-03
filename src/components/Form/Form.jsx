@@ -6,7 +6,7 @@ import css from './Form.module.css';
 
 export const Form = () => {
   const contacts = useSelector(getContactsArray);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const handleNameChange = e => {
     return e.currentTarget.value;
