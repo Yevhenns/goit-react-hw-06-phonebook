@@ -1,17 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContactsFilter } from 'redux/selectors';
+import { getFilter } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 
 import css from './styles.module.css';
 
 export const Filter = () => {
-  const filterName = useSelector(getContactsFilter);
+  const filterName = useSelector(getFilter);
   const dispatch = useDispatch();
 
   const changeFilter = e => {
-    let searchName = e.target.value;
-    dispatch(setFilter(searchName.toLowerCase()));
+    dispatch(setFilter(e.currentTarget.value));
   };
 
   return (

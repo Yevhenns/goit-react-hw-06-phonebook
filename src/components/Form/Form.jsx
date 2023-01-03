@@ -1,43 +1,40 @@
-import { getContactsArray } from 'redux/selectors';
+import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 
 import css from './Form.module.css';
 
 export const Form = () => {
-  const contacts = useSelector(getContactsArray);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const handleNameChange = e => {
-    return e.currentTarget.value;
+const handleSubmit = e => {
+  e.preventDefault();
+  const form = e.target;
+  const name = form.elements.name.value;
+  const number = form.elements.number.value;
+
+  const contact = {
+    id: nanoid(),
+    name,
+    number,
   };
 
-  const handleNumberChange = e => {
-    return e.currentTarget.value;
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const name = e.target.elements.name.value;
-    const number = e.target.elements.number.value;
-    const item = { name, number };
-    e.target.reset();
-
-    const isDublicate = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-
-    isDublicate
-      ? alert(`${name} is already in contacts`)
-      : dispatch(addContact(item));
-  };
+  if (
+    contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())
+  ) {
+    return alert(`${name} is already in contacts.`);
+  }
+  dispatch(addContact(contact));
+  form.reset();
+};
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <label htmlFor="nameItem">Name</label>
       <input
         id="nameItem"
-        onChange={handleNameChange}
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -48,7 +45,6 @@ export const Form = () => {
       <label htmlFor="numberItem">Number</label>
       <input
         id="numberItem"
-        onChange={handleNumberChange}
         type="tel"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
