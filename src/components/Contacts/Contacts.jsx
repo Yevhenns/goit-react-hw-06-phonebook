@@ -7,9 +7,10 @@ import { nanoid } from '@reduxjs/toolkit';
 import css from './Contacts.module.css';
 
 export const Contacts = () => {
-  const contacts = useSelector(getContactsArray);
-  const filter = useSelector(getContactsFilter).toLowerCase();
-  const filteredContacts = contacts.filter(contact =>
+  const contactsList = useSelector(getContactsArray);
+  const filter = useSelector(getContactsFilter);
+
+  const filteredContacts = contactsList.filter(contact =>
     contact.name.toLowerCase().includes(filter)
   );
 
