@@ -9,26 +9,28 @@ export const Form = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-const handleSubmit = e => {
-  e.preventDefault();
-  const form = e.target;
-  const name = form.elements.name.value;
-  const number = form.elements.number.value;
+  const handleSubmit = e => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
 
-  const contact = {
-    id: nanoid(),
-    name,
-    number,
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      return alert(`${name} is already in contacts.`);
+    }
+    dispatch(addContact(contact));
+    form.reset();
   };
-
-  if (
-    contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())
-  ) {
-    return alert(`${name} is already in contacts.`);
-  }
-  dispatch(addContact(contact));
-  form.reset();
-};
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
