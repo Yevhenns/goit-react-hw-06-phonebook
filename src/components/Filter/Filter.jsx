@@ -10,9 +10,9 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const changeFilter = e => {
-    dispatch(setFilter(e.currentTarget.value));
+    dispatch(setFilter(e.currentTarget.value.toLowerCase()));
   };
-
+  
   return (
     <div className={css.filterContainer}>
       <label htmlFor="find">Find contacts by name</label>

@@ -7,12 +7,13 @@ import css from './Contacts.module.css';
 
 export const Contacts = () => {
   const contactsList = useSelector(getContacts);
-  const filter = useSelector(getFilter);  
+  const filter = useSelector(getFilter);    
 
   const filteredContacts = contactsList.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
+    
   );
-
+ 
   return (
     <ul className={css.list}>
       {filteredContacts.map(({ id, name, number }) => {
